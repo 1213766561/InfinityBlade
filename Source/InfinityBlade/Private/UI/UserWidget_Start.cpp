@@ -3,6 +3,7 @@
 #include "UserWidget_Start.h"
 #include"Math/Color.h"
 #include"Engine/Engine.h"
+#include"Kismet/KismetSystemLibrary.h"
 
 bool UUserWidget_Start::Initialize()
 {
@@ -26,5 +27,6 @@ bool UUserWidget_Start::Initialize()
 /* 退出游戏点击函数*/
 void UUserWidget_Start::QuitBtnOnClickedEvent()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("QuitGame"));
+	UKismetSystemLibrary::QuitGame(GetWorld(), nullptr, EQuitPreference::Quit);
+	//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("QuitGame"));
 }
