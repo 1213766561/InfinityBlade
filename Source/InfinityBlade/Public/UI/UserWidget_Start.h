@@ -25,9 +25,12 @@ public:
 	UPROPERTY()
 		UButton* QuitBtn;
 	
+	
 public:
 	/* 判断按钮是否存在*/
 	virtual bool  Initialize() override;
-	
+	/* 退出游戏点击函数*/
+	UFUNCTION()
+		void QuitBtnOnClickedEvent();
 	
 };
