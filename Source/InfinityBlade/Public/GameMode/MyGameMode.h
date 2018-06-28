@@ -31,6 +31,9 @@ public:
 	virtual void BeginPlay() override;
 	/* 注册按钮点击事件*/
 	UFUNCTION()
-		void RegisterBtnOnClickedlEvent();
+		void RegisterBtnOnClickedEvent();
+	/* 返回按钮点击事件*/
+	UFUNCTION()
+		void BackBtnOnClickedEvent();
 	
 };
