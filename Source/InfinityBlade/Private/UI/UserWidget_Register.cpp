@@ -89,7 +89,7 @@ void UUserWidget_Register::AccountRegisterFromServer(FString & Nickname, FString
 	/* 设置请求头*/
 	TargetRequest->SetHeader("Content-Type", "application/json;charset=utf-8");
 	/* 设置请求URL*/
-	TargetRequest->SetURL("");
+	TargetRequest->SetURL("www.baidu.com");
 	/* 设置上传的数据*/
 	TargetRequest->SetContentAsString(RegisterInfo);
 	/* 设置请求成功后委托的方法*/
@@ -123,7 +123,12 @@ void UUserWidget_Register::RequestComplete(FHttpRequestPtr RequestPtr, FHttpResp
 		FString Msg = JsonObject->GetStringField("msg");
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, Status);
 	}
-	/* 解析失败*/
-	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("Loss the Status"));
+	else
+	{
+		/* 解析失败*/
+		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("Loss the Status"));
+
+	}
+	
 }
 
