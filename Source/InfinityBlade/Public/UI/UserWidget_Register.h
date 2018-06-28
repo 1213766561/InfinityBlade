@@ -6,6 +6,8 @@
 #include "Blueprint/UserWidget.h"
 #include"Button.h"
 #include"EditableTextBox.h"
+#include"Runtime/Online/HTTP/Public/Interfaces/IHttpResponse.h"
+#include"IHttpRequest.h"
 #include "UserWidget_Register.generated.h"
 
 /**
@@ -40,5 +42,8 @@ public:
 	/* 注册按钮点击事件*/
 	UFUNCTION()
 		void RegisterBtnOnClickedEvent();
-	
+	/* 账号注册方法*/
+	void AccountRegisterFromServer(FString&Nickname, FString&Password);
+	/* 请求响应方法*/
+	void RequestComplete(FHttpRequestPtr RequestPtr, FHttpResponsePtr ResponsePtr, bool bIsSuccess);
 };
