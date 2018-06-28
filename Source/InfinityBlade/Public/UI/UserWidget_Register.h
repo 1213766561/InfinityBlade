@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include"Button.h"
-#include"TextBlock.h"
+#include"EditableTextBox.h"
 #include "UserWidget_Register.generated.h"
 
 /**
@@ -26,17 +26,19 @@ public:
 		UButton* RegisterBtn;
 	/* 创建昵称输入框变量*/
 	UPROPERTY()
-		UTextBlock* NicknameInput;
+	UEditableTextBox* NicknameInput;
 	/* 创建密码输入框变量*/
 	UPROPERTY()
-		UTextBlock* PasswordInput;
+		UEditableTextBox* PasswordInput;
 	/* 创建再次输入密码输入框变量*/
 	UPROPERTY()
-		UTextBlock* RePasswordInput;
+		UEditableTextBox* RePasswordInput;
 
 public:
 	/* 判断变量以上变量是否加载成功*/
 	virtual bool Initialize() override;
-
+	/* 注册按钮点击事件*/
+	UFUNCTION()
+		void RegisterBtnOnClickedEvent();
 	
 };
