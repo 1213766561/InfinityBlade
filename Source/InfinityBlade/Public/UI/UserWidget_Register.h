@@ -8,6 +8,8 @@
 #include"EditableTextBox.h"
 #include"Runtime/Online/HTTP/Public/Interfaces/IHttpResponse.h"
 #include"IHttpRequest.h"
+#include"Runtime/UMG/Public/Components/CircularThrobber.h"
+#include "UserWidget_Message.h"
 #include "UserWidget_Register.generated.h"
 
 /**
@@ -35,6 +37,15 @@ public:
 	/* 创建再次输入密码输入框变量*/
 	UPROPERTY()
 		UEditableTextBox* RePasswordInput;
+	/* 创建Loading效果*/
+	UPROPERTY()
+		UCircularThrobber* CircularThrobber;
+	UPROPERTY()
+		/* 初始化Message框*/
+		UUserWidget_Message* MessageWidget;
+
+	
+		
 
 public:
 	/* 判断变量以上变量是否加载成功*/

@@ -26,6 +26,11 @@ bool UUserWidget_Register::Initialize()
 	RegisterBtn = Cast<UButton>(GetWidgetFromName(TEXT("Button_Register")));
 	/* 注册按钮点击事件回调*/
 	RegisterBtn->OnClicked.AddDynamic(this, &UUserWidget_Register::RegisterBtnOnClickedEvent);
+	/* 初始化Loading效果*/
+	CircularThrobber = Cast<UCircularThrobber>(GetWidgetFromName(TEXT("CircularThrobber_Loading")));
+	/* 初始化Message*/
+	MessageWidget = Cast<UUserWidget_Message>(GetWidgetFromName(TEXT("MessageWidget")));
+	
 
 	return true;
 }
@@ -36,6 +41,11 @@ bool UUserWidget_Register::Initialize()
 /* 注册按钮点击事件*/
 void UUserWidget_Register::RegisterBtnOnClickedEvent()
 {
+	/* 添加Loading效果*/
+	CircularThrobber->SetVisibility(ESlateVisibility::Visible);
+	/* 设置Register按钮不可用*/
+	RegisterBtn->SetIsEnabled(false);
+
 	/* 获取昵称*/
 	FString Nickname = NicknameInput->GetText().ToString();
 	/* 获取密码*/
@@ -44,22 +54,51 @@ void UUserWidget_Register::RegisterBtnOnClickedEvent()
 	FString RePassword = RePasswordInput->GetText().ToString();
 
 	/* 昵称的长度是否一致2~6*/
-	if (Nickname.Len()<2||Nickname.Len()>6)
+	if (Nickname.Len() < 2 || Nickname.Len() > 6)
 	{
-		GEngine->AddOnScreenDebugMessage(-1,2.f, FColor::Red, TEXT("Nickname too Long,2~6"));
+		MessageWidget->SetVisibility(ESlateVisibility::Visible);
+		MessageWidget->MessageText->SetText(FText::FromString("Nickname is not Available,2~6"));
+		//GEngine->AddOnScreenDebugMessage(-1,2.f, FColor::Red, TEXT("Nickname too Long,2~6"));
+		/* 隐藏 Loading效果*/
+		CircularThrobber->SetVisibility(ESlateVisibility::Hidden);
+		/* 设置Register按钮可用*/
+		RegisterBtn->SetIsEnabled(true);
 		return;
+	}
+	else
+	{
+		if (Password.Len() < 2 || Password.Len() > 8)
+		{
+			MessageWidget->SetVisibility(ESlateVisibility::Visible);
+			MessageWidget->MessageText->SetText(FText::FromString("Password is not Available"));
+			CircularThrobber->SetVisibility(ESlateVisibility::Hidden);
+			/* 设置Register按钮可用*/
+			RegisterBtn->SetIsEnabled(true);
+			return;
+
+		}
+
+
+		/* 两次输入的密码是否一致*/
+		else if (!RePassword.Equals(Password))
+		{
+			MessageWidget->SetVisibility(ESlateVisibility::Visible);
+			MessageWidget->MessageText->SetText(FText::FromString("Second Password is not Same"));
+			//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("Second Password is not Same"));
+			/* 隐藏 Loading效果*/
+			CircularThrobber->SetVisibility(ESlateVisibility::Hidden);
+			/* 设置Register按钮可用*/
+			RegisterBtn->SetIsEnabled(true);
+			return;
+		}
 	}
 
-	/* 两次输入的密码是否一致*/
-	if (!RePassword.Equals(Password))
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("Second Password is not Same"));
-		return;
-	}
+
 	/* 进行账号的注册*/
 	AccountRegisterFromServer(Nickname, Password);
-
 	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, Nickname + "=" + Password + "=" + RePassword);
+
+	return;
 }
 
 /* 账号注册方法*/
@@ -80,7 +119,7 @@ void UUserWidget_Register::AccountRegisterFromServer(FString & Nickname, FString
 	/* 关闭JSon写入器*/
 	TargetJson->Close();
 
-	//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, RegisterInfo);
+
 
 	/* 输出JSonInfo到HTTP请求*/
 	TSharedRef< IHttpRequest> TargetRequest = FHttpModule::Get().CreateRequest();
@@ -92,16 +131,24 @@ void UUserWidget_Register::AccountRegisterFromServer(FString & Nickname, FString
 	TargetRequest->SetURL("www.baidu.com");
 	/* 设置上传的数据*/
 	TargetRequest->SetContentAsString(RegisterInfo);
+
+
 	/* 设置请求成功后委托的方法*/
 	TargetRequest->OnProcessRequestComplete().BindUObject(this, &UUserWidget_Register::RequestComplete);
 	/* 请求服务器*/
 	TargetRequest->ProcessRequest();
 
-
 }
+
 /* 请求响应方法*/
 void UUserWidget_Register::RequestComplete(FHttpRequestPtr RequestPtr, FHttpResponsePtr ResponsePtr, bool bIsSuccess)
 {
+
+	/* 隐藏 Loading效果*/
+	CircularThrobber->SetVisibility(ESlateVisibility::Hidden);
+	/* 设置Register按钮可用*/
+	RegisterBtn->SetIsEnabled(true);
+
 	if (!EHttpResponseCodes::IsOk(ResponsePtr->GetResponseCode()))
 	{
 		/* 服务器未响应*/
@@ -122,13 +169,18 @@ void UUserWidget_Register::RequestComplete(FHttpRequestPtr RequestPtr, FHttpResp
 		FString Status = JsonObject->GetStringField("status");
 		FString Msg = JsonObject->GetStringField("msg");
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, Status);
+		return;
+
+		MessageWidget->SetVisibility(ESlateVisibility::Visible);
+		MessageWidget->MessageText->SetText(FText::FromString("Success"));
 	}
 	else
 	{
 		/* 解析失败*/
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("Loss the Status"));
+		return;
 
 	}
-	
+	return;
 }
 
