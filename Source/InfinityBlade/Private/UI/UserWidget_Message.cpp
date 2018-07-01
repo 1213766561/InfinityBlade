@@ -16,14 +16,15 @@ bool UUserWidget_Message::Initialize()
 	MessageText = Cast<UTextBlock>(GetWidgetFromName(TEXT("TextBlock_Message")));
 	
 	/* 创建关闭按钮*/
-	CloseButton = Cast<UButton>(GetWidgetFromName(TEXT("Button_MessageClose")));
+	CloseBtn = Cast<UButton>(GetWidgetFromName(TEXT("Button_MessageClose")));
 	/* 设置关闭按钮得回调*/
-	CloseButton->OnClicked.AddDynamic(this,&UUserWidget_Message::ClosButtonOnClickedEvent);
+	CloseBtn->OnClicked.AddDynamic(this,&UUserWidget_Message::ClosButtonOnClickedEvent);
 	
 	return true;
 }
 
 void UUserWidget_Message::ClosButtonOnClickedEvent()
 {
+	
 	this->SetVisibility(ESlateVisibility::Hidden);
 }

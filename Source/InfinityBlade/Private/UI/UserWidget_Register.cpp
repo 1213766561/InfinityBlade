@@ -29,8 +29,8 @@ bool UUserWidget_Register::Initialize()
 	/* 初始化Loading效果*/
 	CircularThrobber = Cast<UCircularThrobber>(GetWidgetFromName(TEXT("CircularThrobber_Loading")));
 	/* 初始化Message*/
-	MessageWidget = Cast<UUserWidget_Message>(GetWidgetFromName(TEXT("MessageWidget")));
-	
+	MessageWidget = Cast<UUserWidget_Message>(GetWidgetFromName(TEXT("BP_Widget_Message")));
+		
 
 	return true;
 }
@@ -56,6 +56,7 @@ void UUserWidget_Register::RegisterBtnOnClickedEvent()
 	/* 昵称的长度是否一致2~6*/
 	if (Nickname.Len() < 2 || Nickname.Len() > 6)
 	{
+		
 		MessageWidget->SetVisibility(ESlateVisibility::Visible);
 		MessageWidget->MessageText->SetText(FText::FromString("Nickname is not Available,2~6"));
 		//GEngine->AddOnScreenDebugMessage(-1,2.f, FColor::Red, TEXT("Nickname too Long,2~6"));
@@ -69,6 +70,7 @@ void UUserWidget_Register::RegisterBtnOnClickedEvent()
 	{
 		if (Password.Len() < 2 || Password.Len() > 8)
 		{
+		
 			MessageWidget->SetVisibility(ESlateVisibility::Visible);
 			MessageWidget->MessageText->SetText(FText::FromString("Password is not Available"));
 			CircularThrobber->SetVisibility(ESlateVisibility::Hidden);
@@ -82,6 +84,7 @@ void UUserWidget_Register::RegisterBtnOnClickedEvent()
 		/* 两次输入的密码是否一致*/
 		else if (!RePassword.Equals(Password))
 		{
+			
 			MessageWidget->SetVisibility(ESlateVisibility::Visible);
 			MessageWidget->MessageText->SetText(FText::FromString("Second Password is not Same"));
 			//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("Second Password is not Same"));
@@ -169,10 +172,11 @@ void UUserWidget_Register::RequestComplete(FHttpRequestPtr RequestPtr, FHttpResp
 		FString Status = JsonObject->GetStringField("status");
 		FString Msg = JsonObject->GetStringField("msg");
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, Status);
-		return;
+		
 
 		MessageWidget->SetVisibility(ESlateVisibility::Visible);
 		MessageWidget->MessageText->SetText(FText::FromString("Success"));
+		return;
 	}
 	else
 	{

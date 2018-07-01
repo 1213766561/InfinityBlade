@@ -24,6 +24,7 @@ public:
 		UButton* RegisterBtn;
 	UPROPERTY()
 		UButton* QuitBtn;
+
 	
 	
 public:
@@ -32,5 +33,5 @@ public:
 	/* 退出游戏点击函数*/
 	UFUNCTION()
 		void QuitBtnOnClickedEvent();
-	
+
 };

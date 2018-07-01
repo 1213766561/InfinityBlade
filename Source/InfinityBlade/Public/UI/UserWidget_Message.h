@@ -22,7 +22,7 @@ public:
 		UTextBlock* MessageText;
 	/* 初始化关闭按钮*/
 	UPROPERTY()
-		UButton* CloseButton;
+		UButton* CloseBtn;
 
 public:
 	virtual bool Initialize() override;
