@@ -4,6 +4,7 @@
 
 
 #include "CoreMinimal.h"
+#include "UserWidget_LoadingMap.h"
 #include "Engine/GameInstance.h"
 #include "CustomGameInstance.generated.h"
 
@@ -21,6 +22,10 @@ public:
 	//TMap<FString, FString> ContexMap;
 	UPROPERTY()
 	FString CurrentPlayerName;
+
+	//声明加载地图的Widget
+	UPROPERTY()
+		UUserWidget_LoadingMap* LoadingMap;
 
 public:
 	//初始化方法

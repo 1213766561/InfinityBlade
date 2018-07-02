@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include"Camera/CameraComponent.h"
+#include "Weapon.h"
+#include"Runtime/Engine/Classes/Animation/AnimMontage.h"
 #include "XCharacter.generated.h"
 
 
@@ -19,6 +21,12 @@ public:
 	/* Camera组件创建*/
 	UPROPERTY(EditAnywhere)
 		UCameraComponent* CurrentCameraComponent;
+	//声明武器
+	UPROPERTY(EditAnywhere, Category = "weapon")
+		TSubclassOf<AWeapon> XWeapon;
+	//播放动画蒙太奇
+	UPROPERTY(EditAnywhere, Category = "montage")
+		UAnimMontage* SerialAttachMontage;
 
 
 

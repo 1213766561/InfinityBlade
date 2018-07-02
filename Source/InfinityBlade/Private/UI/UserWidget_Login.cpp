@@ -43,6 +43,7 @@ void UUserWidget_Login::StarGameBtnOnClickedEvent()
 	GameInstance->CurrentPlayerName = Nickname;
 	//╧ь©╗╪сть
 	UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Map/Map_Game"));
+	return;
 	  
 
 }
