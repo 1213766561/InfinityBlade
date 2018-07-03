@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include"Character/XPlayerState.h"
 #include "Animation/AnimInstance.h"
 #include "XAnimInstance.generated.h"
 
@@ -18,6 +19,22 @@ public:
 	//定义速度变量
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		float Speed;
+	UPROPERTY()
+		//声明PlayerState
+		 AXPlayerState* PlayerState;
+	UPROPERTY()
+		//普通攻击的基本攻击
+		 float NormalAttackDamage;
+public:
+	UFUNCTION()
+		//重置普通攻击方法
+		void RestAttackDamage();
+		//连击加成伤害
+	UFUNCTION()
+		void UpdateSerialAttackDamage();
+	//初始化PlayerState静态实例
+	UFUNCTION()
+		void InitPlayerState();
 
 public:
 	//更新人物的速度
@@ -38,9 +55,12 @@ public:
 
 
 public:
+	//初始化动作事件重载
+	virtual void NativeInitializeAnimation() override;
 	//开始播放蒙太奇
 	UFUNCTION()
 		void AnimNotify_PlayStart(UAnimNotify* Notify);
+	UFUNCTION()
 	//结束播放蒙太奇
 		void AnimNotify_PlayEnd(UAnimNotify* Notify);
 

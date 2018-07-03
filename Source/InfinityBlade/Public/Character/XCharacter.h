@@ -27,6 +27,15 @@ public:
 	//播放动画蒙太奇
 	UPROPERTY(EditAnywhere, Category = "montage")
 		UAnimMontage* SerialAttachMontage;
+	//指定默认血量
+	UPROPERTY(EditAnywhere, Category = "PlayerState")
+		float TotalHP;
+	//指定默认MP
+	UPROPERTY(EditAnywhere, Category = "PlayerState")
+		float TotalMP;
+	//指定默认伤害
+	UPROPERTY(EditAnywhere, Category = "PlayerState")
+		float AttackDamage;
 
 
 
