@@ -1,8 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "MainGameMode.h"
-#include "XCharacter.h"
-#include "XPlayerController.h"
 #include "Runtime/CoreUObject/Public/UObject/ConstructorHelpers.h"
 
 
@@ -15,4 +13,6 @@ AMainGameMode::AMainGameMode()
 	DefaultPawnClass = CharacterFinder.Class;
 	//…Ë÷√PlayerController
 	PlayerControllerClass = AXPlayerController::StaticClass();
+	//…Ë÷√PlayerState
+	PlayerStateClass = AXPlayerState::StaticClass();
 }
