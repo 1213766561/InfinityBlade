@@ -8,7 +8,6 @@
 #include "UserWidget_Game.h"
 #include "Weapon.h"
 #include "Character/XAnimInstance.h"
-#include "XplayerState.h"
 #include "XPlayerController.generated.h"
 
 /**
@@ -31,16 +30,12 @@ public:
 	//英雄角色动画实例
 	UPROPERTY()
 		UXAnimInstance* XAnimInstance;
-	UPROPERTY()
-		AXPlayerState* XPlayerState;
 	
 
 	
 public:
 	//游戏开始调用方法
 	virtual void BeginPlay() override;
-	//possPlayeer实例
-	virtual void Possess(APawn* aPawn) override;
 	//绑定输入控件
 	virtual void SetupInputComponent() override;
 	//绑定前后移动和左右移动的方法
@@ -55,13 +50,7 @@ public:
 	//控件按钮初始化方法
 	UFUNCTION()
 		void InitWidgetEvent();
+	
 
-	//初始化玩家的状态
-		void SetupPlayerState();
-	//初始化UI
-		void InitUI();
-	//武器伤害
-		UFUNCTION()
-			void WeaponOverlapEvent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 };

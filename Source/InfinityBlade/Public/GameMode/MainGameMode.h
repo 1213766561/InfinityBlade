@@ -4,9 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameMode.h"
-#include "XCharacter.h"
-#include "XPlayerController.h"
-#include "XPlayerState.h"
 #include "UserWidget_Game.h"
 #include "MainGameMode.generated.h"
 

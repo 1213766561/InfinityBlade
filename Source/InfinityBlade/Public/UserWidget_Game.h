@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Button.h"
-#include "ProgressBar.h"
 #include "UserWidget_Game.generated.h"
 
 /**
@@ -20,12 +19,7 @@ public:
 	//声明普通攻击Button
 	UPROPERTY(Meta = (BindWidget))
 		UButton* Button_Attack;
-	//声明HP
-	UPROPERTY(Meta = (BindWidget))
-		UProgressBar* ProgressBar_HP;
-	//声明MP
-	UPROPERTY(Meta = (BindWidget))
-		UProgressBar* ProgressBar_MP;
+
 
 	
 	
