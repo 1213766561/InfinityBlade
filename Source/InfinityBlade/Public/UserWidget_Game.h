@@ -17,7 +17,7 @@ class INFINITYBLADE_API UUserWidget_Game : public UUserWidget
 	GENERATED_BODY()
 	
 public:
-	//声明普通攻击Button
+	//声明普通攻击Button 并同时绑定
 	UPROPERTY(Meta = (BindWidget))
 		UButton* Button_Attack;
 	//声明HP

@@ -13,48 +13,22 @@ AAICharacter::AAICharacter()
 	//初始化WidgetComponent
 	HPWidget = UObject::CreateAbstractDefaultSubobject<UWidgetComponent>(TEXT("WidgeetHP"));
 	HPWidget->SetupAttachment(GetMesh());
-
-}
-
-// 游戏开始调用方法
-void AAICharacter::BeginPlay()
-{
-
-
-	HP_Bar = Cast<UUserWidget_HPBar>(HPWidget->GetUserWidgetObject());
-	//初始化CurrentHP
-	CurrentHP = TotalHP;
+	//BPBar = Cast<UUserWidget_HPBar>(HPWidget->GetUserWidgetObject()->GetWidgetFromName(TEXT("BP_Widget_HPBar")));
 	
-	if (HP_Bar!=nullptr)
-	{
-		//初始化HPBar
-		
-		HP_Bar->HPBar->SetPercent(CurrentHP / TotalHP);
-		//初始化HPTextBox
-		HP_Bar->CurrentHPTextBox->SetText(FText::AsPercent(CurrentHP));
-
-		HP_Bar->TotalHPTextBar->SetText(FText::AsPercent(TotalHP));
-
-	}
+	
 }
 
-
-float AAICharacter::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+/*void AAICharacter::BeginPlay()
 {
-	//Damamage逻辑
-	CurrentHP -= BaseDamage;
-	if (HP_Bar != nullptr)
-	{
-		//updateHP
-		
-		HP_Bar->HPBar->SetPercent(CurrentHP / TotalHP);
-		//初始化HPTextBox
-		HP_Bar->CurrentHPTextBox->SetText(FText::AsPercent(CurrentHP));
-		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, FString::SanitizeFloat(CurrentHP));
-		HP_Bar->TotalHPTextBar->SetText(FText::AsPercent(TotalHP));
+	Super::BeginPlay();
+	CurrentHP = TotalHP;
+	if (!BPBar) return;
+	BPBar->ProgressBar_HP->SetPercent(CurrentHP / TotalHP);
+	BPBar->TextBlock_CurrentHP->SetText(FText::FromString(FString::SanitizeFloat(CurrentHP)));
+	BPBar->TextBlock_TotalHP->SetText(FText::FromString(FString::SanitizeFloat(TotalHP)));
 
-		return BaseDamage;
-	}
-	return BaseDamage;
-}
+	GEngine->AddOnScreenDebugMessage(-1,2.f,FColor::Red,FString::SanitizeFloat(CurrentHP / TotalHP));
+}*/
+
+
 
