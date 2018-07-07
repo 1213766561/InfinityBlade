@@ -2,7 +2,7 @@
 
 #include "UserWidget_HPBar.h"
 
-bool UUserWidget_HPBar::Initialize()
+/*bool UUserWidget_HPBar::Initialize()
 {
 	if (Super::Initialize())
 	{
@@ -18,4 +18,4 @@ bool UUserWidget_HPBar::Initialize()
 	
 	return true;
 
-}
+}*/

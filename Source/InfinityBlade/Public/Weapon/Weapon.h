@@ -26,6 +26,8 @@ public:
 		UCapsuleComponent* CapsuleComponent;
 	UPROPERTY(VisibleAnywhere)
 		USkeletalMeshComponent* WeaponComponent;
+	UPROPERTY()
+		ACharacter* WeaponOwner;
 		
 
 

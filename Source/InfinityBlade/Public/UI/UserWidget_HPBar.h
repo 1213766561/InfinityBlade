@@ -17,18 +17,16 @@ class INFINITYBLADE_API UUserWidget_HPBar : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	UPROPERTY()
+	UPROPERTY(Meta = (BindWidget),BlueprintReadWrite)
 		//ÉùÃ÷HPBar
-		UProgressBar * HPBar;
-	UPROPERTY()
+		UProgressBar * ProgressBar_HP;
+	UPROPERTY(Meta = (BindWidget),BlueprintReadWrite)
 		//ÉùÃ÷CurrentHP Text
-		UTextBlock* CurrentHPTextBox;
-	UPROPERTY()
+		UTextBlock* TextBlock_CurrentHP;
+	UPROPERTY(Meta = (BindWidget),BlueprintReadWrite)
 		//ÉùÃ÷TotlalHP Text
-		UTextBlock* TotalHPTextBar;
+		UTextBlock* TextBlock_TotalHP;
 
-public:
-	virtual bool Initialize() override;
 
 
 
