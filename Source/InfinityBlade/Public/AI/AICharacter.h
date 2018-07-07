@@ -21,25 +21,29 @@ public:
 	AAICharacter();
 
 	//添加WidgetUI组件
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UPROPERTY(VisibleAnywhere)
 		UWidgetComponent* HPWidget;
 	//声明HP
-	UPROPERTY(EditAnywhere, category = "State", BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, category = "State")
 		float TotalHP;
 	//声明BaseDamage
-	UPROPERTY(EditAnywhere, category = "State", BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, category = "State")
 		float BaseDamage;
 	//声明当前的HP
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-		float CurrentHP;
 	UPROPERTY()
-		UUserWidget_HPBar* BPBar;
+		float CurrentHP;
 
 
+	UPROPERTY()
+		//声明HPBar的控件
+		UUserWidget_HPBar* HP_Bar;
 
-/*public:
-	virtual void BeginPlay() override;*/
 
+public:
+	// 游戏开始调用方法
+	virtual void BeginPlay() override;
+	//重载伤害事件
+	virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
 	
 	
