@@ -19,11 +19,3 @@ bool UUserWidget_HPBar::Initialize()
 	return true;
 
 }
-
-void UUserWidget_HPBar::UpdateHP(float CurrentHP, float TotalHP)
-{
-	HPBar->SetPercent(CurrentHP / TotalHP);
-	CurrentHPTextBox->SetText(FText::AsPercent(CurrentHP));
-	TotalHPTextBar->SetText(FText::AsPercent(TotalHP));
-	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, "Success");
-}

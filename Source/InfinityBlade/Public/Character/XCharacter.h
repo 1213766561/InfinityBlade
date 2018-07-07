@@ -43,7 +43,7 @@ public:
 	//构造方法
 	AXCharacter();
 
-protected:
+public:
 	//游戏开始调用
 	virtual void BeginPlay() override;
 

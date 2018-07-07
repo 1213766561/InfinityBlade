@@ -30,9 +30,7 @@ public:
 public:
 	virtual bool Initialize() override;
 
-	UFUNCTION()
-		//UpdateHP
-		void UpdateHP(float CurrentHP,float TotalHP);
+
 
 	
 	

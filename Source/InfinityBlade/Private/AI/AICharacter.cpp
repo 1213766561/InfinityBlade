@@ -28,12 +28,12 @@ void AAICharacter::BeginPlay()
 	if (HP_Bar!=nullptr)
 	{
 		//初始化HPBar
-		HP_Bar->UpdateHP(CurrentHP, TotalHP);
-		//HP_Bar->HPBar->SetPercent(CurrentHP / TotalHP);
+		
+		HP_Bar->HPBar->SetPercent(CurrentHP / TotalHP);
 		//初始化HPTextBox
-		//HP_Bar->CurrentHPTextBox->SetText(FText::AsPercent(CurrentHP));
-		//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, "Success");
-		//HP_Bar->TotalHPTextBar->SetText(FText::AsPercent(TotalHP));
+		HP_Bar->CurrentHPTextBox->SetText(FText::AsPercent(CurrentHP));
+
+		HP_Bar->TotalHPTextBar->SetText(FText::AsPercent(TotalHP));
 
 	}
 }
@@ -46,11 +46,12 @@ float AAICharacter::TakeDamage(float Damage, struct FDamageEvent const& DamageEv
 	if (HP_Bar != nullptr)
 	{
 		//updateHP
-		HP_Bar->UpdateHP(CurrentHP, TotalHP);
-		//HP_Bar->HPBar->SetPercent(CurrentHP / TotalHP);
+		
+		HP_Bar->HPBar->SetPercent(CurrentHP / TotalHP);
 		//初始化HPTextBox
-		//HP_Bar->CurrentHPTextBox->SetText(FText::AsPercent(CurrentHP));
-		//HP_Bar->TotalHPTextBar->SetText(FText::AsPercent(TotalHP));
+		HP_Bar->CurrentHPTextBox->SetText(FText::AsPercent(CurrentHP));
+		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, FString::SanitizeFloat(CurrentHP));
+		HP_Bar->TotalHPTextBar->SetText(FText::AsPercent(TotalHP));
 
 		return BaseDamage;
 	}
