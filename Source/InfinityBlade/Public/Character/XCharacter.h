@@ -16,8 +16,10 @@ UCLASS()
 class INFINITYBLADE_API AXCharacter : public ACharacter
 {
 	GENERATED_BODY()
+
 public:
 
+	
 	/* Camera组件创建*/
 	UPROPERTY(EditAnywhere)
 		UCameraComponent* CurrentCameraComponent;

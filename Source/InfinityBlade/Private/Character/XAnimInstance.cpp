@@ -10,7 +10,6 @@ void UXAnimInstance::NativeInitializeAnimation()
 {
 	Super::NativeInitializeAnimation();
 	InitPlayerState();
-	
 }
 
 
@@ -27,14 +26,16 @@ void UXAnimInstance::RestAttackDamage()
 //连招加成伤害
 void UXAnimInstance::UpdateSerialAttackDamage()
 {
-	//加成伤害
-	PlayerState->SetAttackDamage(PlayerState->GetAttackDamage()+10.f);
-	
+	if (PlayerState != nullptr)
+	{
+		//加成伤害
+		PlayerState->SetAttackDamage(PlayerState->GetAttackDamage() + 10.f);
+	}
 }
 
 void UXAnimInstance::InitPlayerState()
 {
-	if (PlayerState == nullptr)
+	if (PlayerState != nullptr)
 	{
 		//获取Controller
 		AXPlayerController* PlayerController = Cast<AXPlayerController>(TryGetPawnOwner()->GetController());
@@ -112,4 +113,14 @@ void UXAnimInstance::AnimNotify_FiveAttackInput(UAnimNotify * Notify)
 	//普通攻击伤害+40
 	UpdateSerialAttackDamage();
 	//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, "SecondSerialAttackDamageIs" + FString::SanitizeFloat(PlayerState->GetAttackDamage()));
+}
+
+void UXAnimInstance::AnimNotify_BIsAttack(UAnimNotify * Notify)
+{
+	BIsAttack = true;
+}
+
+void UXAnimInstance::AnimNotify_BIsNotAttack(UAnimNotify * Notify)
+{
+	BIsAttack = false;
 }

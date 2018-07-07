@@ -52,6 +52,8 @@ public:
 	bool bInEnableFourAttack;
 	//是否进入第5次连击
 	bool bInEnableFiveAttack;
+	//是否有伤害
+	bool BIsAttack;
 
 
 public:
@@ -79,4 +81,12 @@ public:
 	//进入第5次连击
 	UFUNCTION()
 		void AnimNotify_FiveAttackInput(UAnimNotify* Notify);
+	//伤害动画通知
+	UFUNCTION()
+		void AnimNotify_BIsAttack(UAnimNotify* Notify);
+	//结束伤害通知
+	UFUNCTION()
+		void AnimNotify_BIsNotAttack(UAnimNotify* Notify);
+
+
 };

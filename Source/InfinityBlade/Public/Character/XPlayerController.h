@@ -21,6 +21,7 @@ class INFINITYBLADE_API AXPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 public:
+	UPROPERTY()
 	AXCharacter * XCharacter;
 	//定义游戏界面UI
 	UPROPERTY()
@@ -33,6 +34,11 @@ public:
 		UXAnimInstance* XAnimInstance;
 	UPROPERTY()
 		AXPlayerState* XPlayerState;
+	UPROPERTY()
+		ACharacter* DmagedCharacter;
+	//AI数组
+	UPROPERTY()
+		TArray<AActor*>AIArray;    //指针需要加在类型里面；
 	
 
 	
@@ -49,6 +55,17 @@ public:
 		void MoveeForward(float Speed);
 	UFUNCTION()
 		void MoveRight(float Speed);
+
+	//绑定视野方法
+	UFUNCTION()
+		void Trun(float Speed);
+	UFUNCTION()
+		void Lookup(float Speed);
+
+	//锁定AI
+	UFUNCTION()
+		void LockEnemy();
+
 	//攻击按钮点击事件
 	UFUNCTION()
 		void AttackBtnOnClickedEvent();

@@ -10,8 +10,12 @@ AXCharacter::AXCharacter()
 
 	//初始化相机组件
 	CurrentCameraComponent = UObject::CreateDefaultSubobject<UCameraComponent>("CurrentCameraComponent");
+	//初始化相机架
+	//SpringArm = UObject::CreateDefaultSubobject<USpringArmComponent>("SpringArm");
 	//绑定相机组件
-	CurrentCameraComponent->SetupAttachment(RootComponent);
+	//SpringArm->SetupAttachment(GetMesh());
+
+	CurrentCameraComponent->SetupAttachment(GetMesh());//AttachToComponent(SpringArm,FAttachmentTransformRules::KeepWorldTransform);
 	//设置角色移动的朝向
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	//设置角色控制器的朝向
@@ -19,7 +23,7 @@ AXCharacter::AXCharacter()
 	bUseControllerRotationRoll = false;
 	bUseControllerRotationYaw = false;
 	//相机角色控制器朝向
-	CurrentCameraComponent->bUsePawnControlRotation = true;
+	CurrentCameraComponent->bUsePawnControlRotation = false;
 }
 
 // //游戏开始调用
