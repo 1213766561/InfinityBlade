@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include"Camera/CameraComponent.h"
 #include "Weapon.h"
+#include "Character/Skill/Skill_IceStone.h"
 #include"Runtime/Engine/Classes/Animation/AnimMontage.h"
 #include "XCharacter.generated.h"
 
@@ -29,6 +30,13 @@ public:
 	//播放动画蒙太奇
 	UPROPERTY(EditAnywhere, Category = "montage")
 		UAnimMontage* SerialAttachMontage;
+	//寒冰之石蒙太奇
+	UPROPERTY(EditAnywhere, Category = "montage")
+		UAnimMontage* IceStoneSkillMontage;
+	//寒冰之石特效Class
+	UPROPERTY(EditAnywhere, Category = "SkillParticle")
+		TSubclassOf<ASkill_IceStone> IceStoneSkillParticle;
+
 	//指定默认血量
 	UPROPERTY(EditAnywhere, Category = "PlayerState")
 		float TotalHP;

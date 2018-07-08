@@ -26,7 +26,9 @@ public:
 	//声明MP
 	UPROPERTY(Meta = (BindWidget))
 		UProgressBar* ProgressBar_MP;
-
+	//声明寒冰之石button
+	UPROPERTY(Meta = (BindWidget))
+		UButton* Button_IceStone;
 	
 	
 };

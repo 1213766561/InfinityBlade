@@ -77,6 +77,16 @@ void AXPlayerController::SetupPlayerState()
 	XPlayerState->SetAttackDamage(XCharacter->AttackDamage);
 }
 
+//更新HP，MP函数
+
+void AXPlayerController::UpdatePlayerState(float UpdateHP, float UpdateMP)
+{
+
+	XPlayerState->SetCurrentHP(XPlayerState->GetCurrentHP() - UpdateHP);
+	XPlayerState->SetCurrentMP(XPlayerState->GetCurrentMP()- UpdateMP);
+
+}
+
 void AXPlayerController::InitUI()
 {
 	//更新HP
@@ -113,6 +123,7 @@ void AXPlayerController::WeaponOverlapEvent(UPrimitiveComponent * OverlappedComp
 
 
 
+
 void AXPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
@@ -139,8 +150,8 @@ void AXPlayerController::MoveeForward(float Speed)
 void AXPlayerController::MoveRight(float Speed)
 {
 	FRotator ControllerRotation = GetControlRotation();
-	//FRotator ControllerYawRotation(0.f, ControllerRotation.Yaw, 0.f);
-	FRotator ControllerYawRotation(0.f, 0.f, ControllerRotation.Yaw);
+	FRotator ControllerYawRotation(0.f, ControllerRotation.Yaw, 0.f);
+	//FRotator ControllerYawRotation(0.f, 0.f, ControllerRotation.Yaw);
 	FVector Direction = FRotationMatrix(ControllerYawRotation).GetUnitAxis(EAxis::Y);
 	//获取移动方法
 	XCharacter->AddMovementInput(Direction, Speed);
@@ -158,7 +169,7 @@ void AXPlayerController::Lookup(float Speed)
 
 
 //锁定敌人
-void AXPlayerController::LockEnemy()
+void AXPlayerController::LockEnemy(float HitRadius)
 {
 	//获得自己的位置
 	FVector USLocation = XCharacter->GetActorLocation();
@@ -186,7 +197,7 @@ void AXPlayerController::LockEnemy()
 
 		}
 		//判断最小距离大小
-		if (MinDistance<=400.f)
+		if (MinDistance<= HitRadius)
 		{
 			//计算朝向，朝向最近的敌人
 			FRotator TargetRotation = UKismetMathLibrary::FindLookAtRotation(USLocation, MinActor->GetActorLocation());
@@ -195,6 +206,7 @@ void AXPlayerController::LockEnemy()
 			TargetRotation.Pitch = XCharacter->GetCapsuleComponent()->GetComponentRotation().Pitch;
 			//设置朝向
 			XCharacter->GetCapsuleComponent()->SetWorldRotation(TargetRotation);
+		
 
 		}
 
@@ -210,6 +222,10 @@ void AXPlayerController::InitWidgetEvent()
 	if (MainUserWidget->Button_Attack)
 	{
 		MainUserWidget->Button_Attack->OnClicked.AddDynamic(this, &AXPlayerController::AttackBtnOnClickedEvent);
+	}
+	if (MainUserWidget->Button_IceStone)
+	{
+		MainUserWidget->Button_IceStone->OnClicked.AddDynamic(this, &AXPlayerController::IceStoneOnClickedEvent);
 	}
 }
 
@@ -230,7 +246,7 @@ void AXPlayerController::AttackBtnOnClickedEvent()
 
 	//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, "False");
 
-	LockEnemy();
+	LockEnemy(400.f);
 
 	//获得连击动画
 	UAnimMontage* SerialAttachMontage = XCharacter->SerialAttachMontage;
@@ -268,6 +284,29 @@ void AXPlayerController::AttackBtnOnClickedEvent()
 	{
 		//默认播放第5节
 		XAnimInstance->Montage_JumpToSection(FName("FiveSection"), SerialAttachMontage);
+	}
+	
+}
+
+void AXPlayerController::IceStoneOnClickedEvent()
+{
+
+	LockEnemy(1500.f);
+	if (XPlayerState->GetCurrentMP()>=10.f)
+	{
+		if (XCharacter != nullptr)
+		{
+			if (XAnimInstance->bIsPlaying)
+			{
+				return;
+			}
+
+			UpdatePlayerState(0.f, 10.f);
+			InitUI();
+			XCharacter->PlayAnimMontage(XCharacter->IceStoneSkillMontage);
+			return;
+		}
+		return;
 	}
 	
 }

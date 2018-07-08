@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include"Character/XPlayerState.h"
 #include "Animation/AnimInstance.h"
+#include "Character/XCharacter.h"
+#include "Character/Skill/Skill_IceStone.h"
 #include "XAnimInstance.generated.h"
 
 /**
@@ -19,12 +21,25 @@ public:
 	//定义速度变量
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		float Speed;
+	//声明Character
+	UPROPERTY()
+		AXCharacter* XCharacter;
 	UPROPERTY()
 		//声明PlayerState
 		 AXPlayerState* PlayerState;
 	UPROPERTY()
 		//普通攻击的基本攻击
 		 float NormalAttackDamage;
+
+public:
+	//声明寒冰之石的Particle
+	UPROPERTY()
+		ASkill_IceStone* Skill_IceStone_Particle;
+
+
+
+
+
 public:
 	UFUNCTION()
 		//重置普通攻击方法
@@ -87,6 +102,8 @@ public:
 	//结束伤害通知
 	UFUNCTION()
 		void AnimNotify_BIsNotAttack(UAnimNotify* Notify);
-
+	//寒冰之石蒙太奇开始播放
+	UFUNCTION()
+		void AnimNotify_SpwanIceStone(UAnimNotify* Notify);
 
 };

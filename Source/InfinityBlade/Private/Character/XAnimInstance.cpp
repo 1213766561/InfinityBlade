@@ -124,3 +124,29 @@ void UXAnimInstance::AnimNotify_BIsNotAttack(UAnimNotify * Notify)
 {
 	BIsAttack = false;
 }
+
+
+
+void UXAnimInstance::AnimNotify_SpwanIceStone(UAnimNotify * Notify)
+{
+
+	XCharacter = Cast<AXCharacter>(TryGetPawnOwner());
+	
+	if (XCharacter != nullptr)
+	{
+			//获得Spawn的location
+			FVector TargetLocation = XCharacter->GetMesh()->GetSocketLocation("Right_Skill_Scoket");
+			//获得XCharacter的Rotation
+			
+			FRotator TargetRotator = XCharacter->GetActorRotation();
+			//XCharacter->GetMesh()->GetSocketRotation("Right_Skill_Scoket");
+			
+			//生成SkillParticle
+			Skill_IceStone_Particle = GetWorld()->SpawnActor<ASkill_IceStone>(XCharacter->IceStoneSkillParticle, TargetLocation, TargetRotator);
+			//设置速度
+			Skill_IceStone_Particle->Shoot(XCharacter->GetActorForwardVector());                    //Shoot(TargetRotator.Vector());
+
+	}
+
+	
+}

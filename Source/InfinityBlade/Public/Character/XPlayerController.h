@@ -32,10 +32,10 @@ public:
 	//英雄角色动画实例
 	UPROPERTY()
 		UXAnimInstance* XAnimInstance;
+	//声明PlayerState
 	UPROPERTY()
 		AXPlayerState* XPlayerState;
-	UPROPERTY()
-		ACharacter* DmagedCharacter;
+	
 	//AI数组
 	UPROPERTY()
 		TArray<AActor*>AIArray;    //指针需要加在类型里面；
@@ -64,11 +64,14 @@ public:
 
 	//锁定AI
 	UFUNCTION()
-		void LockEnemy();
+		void LockEnemy(float HitRadius);
 
 	//攻击按钮点击事件
 	UFUNCTION()
 		void AttackBtnOnClickedEvent();
+	//寒冰之石点击事件、
+	UFUNCTION()
+		void IceStoneOnClickedEvent();
 	//控件按钮初始化方法
 	UFUNCTION()
 		void InitWidgetEvent();
@@ -80,5 +83,9 @@ public:
 	//武器伤害
 		UFUNCTION()
 			void WeaponOverlapEvent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	
+	//更新状态
+		UFUNCTION()
+			void UpdatePlayerState(float UpdateHP, float UpdateMP);
 
 };
