@@ -2,6 +2,8 @@
 
 #include "Skill_IceStone.h"
 #include "AI/AICharacter.h"
+#include "Character/XCharacter.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "../../../Public/Character/Skill/Skill_IceStone.h"
 
 
@@ -13,7 +15,7 @@ ASkill_IceStone::ASkill_IceStone()
 	//设置根组件
 	CapsuleComponent->SetupAttachment(RootComponent);
 
-
+	//碰撞事件回调
 	CapsuleComponent->OnComponentBeginOverlap.AddDynamic(this, &ASkill_IceStone::HasOverLap);
 
 
@@ -41,7 +43,15 @@ ASkill_IceStone::ASkill_IceStone()
 
 void ASkill_IceStone::HasOverLap(UPrimitiveComponent * OvrlappedComponent, AActor * OtherActor, UPrimitiveComponent * OtherComponent, int OtherBodyIndex, bool FromSweep, const FHitResult & HitResult)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, "HasOverLap");
+	
+	if (OtherActor)
+	{
+		UGameplayStatics::ApplyPointDamage(OtherActor, 20.f, HitResult.ImpactNormal, HitResult, nullptr, this, nullptr);
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), Particle, OtherActor->GetActorLocation());
+		this->Destroyed();  //Destroyed 失效，在蓝图中重载
+		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, "HasOverLap");
+	}
+	
 }
 
 void ASkill_IceStone::Shoot(FVector Derection)

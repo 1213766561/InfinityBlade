@@ -78,8 +78,7 @@ public:
 
 	//初始化玩家的状态
 		void SetupPlayerState();
-	//初始化UI
-		void InitUI();
+	
 	//武器伤害
 		UFUNCTION()
 			void WeaponOverlapEvent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
@@ -87,5 +86,7 @@ public:
 	//更新状态
 		UFUNCTION()
 			void UpdatePlayerState(float UpdateHP, float UpdateMP);
+	//更新UI
+		void UpdateUI();
 
 };

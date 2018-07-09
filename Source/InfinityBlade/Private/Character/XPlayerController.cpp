@@ -23,7 +23,7 @@ void AXPlayerController::BeginPlay()
 	MainUserWidget = CreateWidget<UUserWidget_Game>(GetGameInstance(), LoadClass<UUserWidget_Game>(nullptr,TEXT("WidgetBlueprint'/Game/UI/BP_Widget_Game.BP_Widget_Game_C'")));
 	MainUserWidget->AddToViewport();
 	//初始化UI
-	InitUI();
+	UpdateUI();
 	//初始化普攻按钮函数调用
 	InitWidgetEvent();
 
@@ -87,7 +87,7 @@ void AXPlayerController::UpdatePlayerState(float UpdateHP, float UpdateMP)
 
 }
 
-void AXPlayerController::InitUI()
+void AXPlayerController::UpdateUI()
 {
 	//更新HP
 	if (MainUserWidget->ProgressBar_HP)
@@ -109,9 +109,11 @@ void AXPlayerController::WeaponOverlapEvent(UPrimitiveComponent * OverlappedComp
 	{
 		if (XAnimInstance->BIsAttack)
 		{
-			UGameplayStatics::ApplyDamage(OtherActor, XPlayerState->GetAttackDamage(), this, XCharacter, nullptr);
-			GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, "Overlap");
+			UGameplayStatics::ApplyDamage(OtherActor, XAnimInstance->NormalAttackDamage, this, XCharacter, nullptr);
 		}
+
+		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Blue, FString::SanitizeFloat(XPlayerState->GetAttackDamage()));
+
 		/*DmagedCharacter = Cast<ACharacter>(SweepResult->Break->GetHit);
 		if (DmagedCharacter != nullptr && DmagedCharacter != WeaponOwner)
 		{
@@ -302,7 +304,7 @@ void AXPlayerController::IceStoneOnClickedEvent()
 			}
 
 			UpdatePlayerState(0.f, 10.f);
-			InitUI();
+			UpdateUI();
 			XCharacter->PlayAnimMontage(XCharacter->IceStoneSkillMontage);
 			return;
 		}

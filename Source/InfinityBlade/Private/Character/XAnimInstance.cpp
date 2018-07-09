@@ -20,6 +20,7 @@ void UXAnimInstance::RestAttackDamage()
 	{
 		//ÖØÖÃÆÕÍ¨¹¥»÷ÉËº¦
 		PlayerState->SetAttackDamage(NormalAttackDamage);
+		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, "SerialAttackDamageIs" + FString::SanitizeFloat(PlayerState->GetAttackDamage()));
 	}
 }
 
@@ -29,24 +30,27 @@ void UXAnimInstance::UpdateSerialAttackDamage()
 	if (PlayerState != nullptr)
 	{
 		//¼Ó³ÉÉËº¦
-		PlayerState->SetAttackDamage(PlayerState->GetAttackDamage() + 10.f);
+		NormalAttackDamage += 10.f;
+		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, "SerialAttackDamageIs" + FString::SanitizeFloat(NormalAttackDamage));
 	}
 }
 
+//³õÊ¼»¯¹¥»÷ÉËº¦
 void UXAnimInstance::InitPlayerState()
 {
 	if (PlayerState != nullptr)
 	{
-		//»ñÈ¡Controller
-		AXPlayerController* PlayerController = Cast<AXPlayerController>(TryGetPawnOwner()->GetController());
-		//»ñÈ¡×´Ì¬
-		if (PlayerController != nullptr)
-		{
-			PlayerState = Cast<AXPlayerState>(PlayerController->PlayerState);
-			//³õÊ¼»¯ÆÕÍ¨¹¥»÷µÄÉËº¦
-			NormalAttackDamage = PlayerState->GetAttackDamage();
-		}
-		
+		NormalAttackDamage = PlayerState->GetAttackDamage();
+	
+	}
+	//»ñÈ¡Controller
+	AXPlayerController* PlayerController = Cast<AXPlayerController>(TryGetPawnOwner()->GetController());
+	//»ñÈ¡×´Ì¬
+	if (PlayerController != nullptr)
+	{
+		PlayerState = Cast<AXPlayerState>(PlayerController->XPlayerState);
+		//³õÊ¼»¯ÆÕÍ¨¹¥»÷µÄÉËº¦
+		NormalAttackDamage = PlayerState->GetAttackDamage();
 	}
 
 }
@@ -90,7 +94,7 @@ void UXAnimInstance::AnimNotify_SecondAttackInput(UAnimNotify * Notify)
 	bInEnableScondAttack = true;
 	//ÆÕÍ¨¹¥»÷ÉËº¦+10
 	UpdateSerialAttackDamage();
-	//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, "SecondSerialAttackDamageIs" + FString::SanitizeFloat(PlayerState->GetAttackDamage()));
+	
 }
 
 void UXAnimInstance::AnimNotify_ThreeAttackInput(UAnimNotify * Notify)
@@ -98,6 +102,7 @@ void UXAnimInstance::AnimNotify_ThreeAttackInput(UAnimNotify * Notify)
 	bInEnableThreeAttack = true;
 	//ÆÕÍ¨¹¥»÷ÉËº¦+20
 	UpdateSerialAttackDamage();
+	
 }
 
 void UXAnimInstance::AnimNotify_FourAttackInput(UAnimNotify * Notify)
@@ -105,6 +110,7 @@ void UXAnimInstance::AnimNotify_FourAttackInput(UAnimNotify * Notify)
 	bInEnableFourAttack = true;
 	//ÆÕÍ¨¹¥»÷ÉËº¦+30
 	UpdateSerialAttackDamage();
+	
 }
 
 void UXAnimInstance::AnimNotify_FiveAttackInput(UAnimNotify * Notify)
@@ -112,7 +118,7 @@ void UXAnimInstance::AnimNotify_FiveAttackInput(UAnimNotify * Notify)
 	bInEnableFiveAttack = true;
 	//ÆÕÍ¨¹¥»÷ÉËº¦+40
 	UpdateSerialAttackDamage();
-	//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, "SecondSerialAttackDamageIs" + FString::SanitizeFloat(PlayerState->GetAttackDamage()));
+	
 }
 
 void UXAnimInstance::AnimNotify_BIsAttack(UAnimNotify * Notify)
