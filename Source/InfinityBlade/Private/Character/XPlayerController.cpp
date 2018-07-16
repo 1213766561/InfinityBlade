@@ -145,7 +145,11 @@ void AXPlayerController::MoveeForward(float Speed)
 	FVector Direction = FRotationMatrix(ControllerYawRotation).GetUnitAxis(EAxis::X);
 	//FVector Direction = ControllerYawRotation->GetForwardVector()
 	//获取移动方法
-	XCharacter->AddMovementInput(Direction, Speed);
+	if (XCharacter)
+	{
+		XCharacter->AddMovementInput(Direction, Speed);
+	}
+
 }
 
 //左右移动
@@ -156,17 +160,29 @@ void AXPlayerController::MoveRight(float Speed)
 	//FRotator ControllerYawRotation(0.f, 0.f, ControllerRotation.Yaw);
 	FVector Direction = FRotationMatrix(ControllerYawRotation).GetUnitAxis(EAxis::Y);
 	//获取移动方法
-	XCharacter->AddMovementInput(Direction, Speed);
+	if (XCharacter)
+	{
+		XCharacter->AddMovementInput(Direction, Speed);
+	}
+	
 }
 
 void AXPlayerController::Trun(float Speed)
 {
-	XCharacter->AddControllerYawInput(Speed);
+	if (XCharacter)
+	{
+		XCharacter->AddControllerYawInput(Speed);
+	}
+
 }
 
 void AXPlayerController::Lookup(float Speed)
 {
-	XCharacter->AddControllerPitchInput(Speed);
+	if (XCharacter)
+	{
+		XCharacter->AddControllerPitchInput(Speed);
+	}
+
 }
 
 

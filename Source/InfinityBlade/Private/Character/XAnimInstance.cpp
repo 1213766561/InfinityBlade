@@ -38,21 +38,26 @@ void UXAnimInstance::UpdateSerialAttackDamage()
 //初始化攻击伤害
 void UXAnimInstance::InitPlayerState()
 {
-	if (PlayerState != nullptr)
+	if (TryGetPawnOwner())
 	{
-		NormalAttackDamage = PlayerState->GetAttackDamage();
-	
-	}
-	//获取Controller
-	AXPlayerController* PlayerController = Cast<AXPlayerController>(TryGetPawnOwner()->GetController());
-	//获取状态
-	if (PlayerController != nullptr)
-	{
-		PlayerState = Cast<AXPlayerState>(PlayerController->XPlayerState);
-		//初始化普通攻击的伤害
-		NormalAttackDamage = PlayerState->GetAttackDamage();
-	}
+		//获取Controller
+		AXPlayerController* PlayerController = Cast<AXPlayerController>(TryGetPawnOwner()->GetController());
+		//获取状态
+		if (PlayerController)
+		{
+			PlayerState = Cast<AXPlayerState>(PlayerController->XPlayerState);
+			//初始化普通攻击的伤害
+			NormalAttackDamage = PlayerState->GetAttackDamage();
+		}
 
+		if (PlayerState)
+		{
+			NormalAttackDamage = PlayerState->GetAttackDamage();
+
+		}
+	}
+	
+	
 }
 
 void UXAnimInstance::UpdateSpeed()

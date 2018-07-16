@@ -76,6 +76,7 @@ public:
 	UFUNCTION()
 		void InitWidgetEvent();
 
+	UFUNCTION()
 	//初始化玩家的状态
 		void SetupPlayerState();
 	

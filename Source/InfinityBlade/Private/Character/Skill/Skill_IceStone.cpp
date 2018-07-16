@@ -56,7 +56,11 @@ void ASkill_IceStone::HasOverLap(UPrimitiveComponent * OvrlappedComponent, AActo
 
 void ASkill_IceStone::Shoot(FVector Derection)
 {
-	ProjectileMovementComponent->Velocity = Derection * ProjectileMovementComponent->InitialSpeed;
+	if (this) 
+	{
+		ProjectileMovementComponent->Velocity = Derection * ProjectileMovementComponent->InitialSpeed;
+	}
+	
 }
 
 // ³õÊ¼»¯º¯Êý

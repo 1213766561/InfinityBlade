@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Runtime/UMG/Public/Components/WidgetComponent.h"
 #include "UserWidget_HPBar.h"
+#include "Runtime/AIModule/Classes/BehaviorTree/BehaviorTree.h"
 #include "AICharacter.generated.h"
 
 
@@ -35,6 +36,12 @@ public:
 	//是否死亡
 	UPROPERTY()
 		bool bIsDead;
+	//声明行为树
+	UPROPERTY(EditAnywhere, Category = "AI")
+		UBehaviorTree* BehaviorTree;
+	
+		
+
 
 	/*UPROPERTY()
 		//声明HPBar的控件
