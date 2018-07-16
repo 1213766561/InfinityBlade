@@ -7,6 +7,7 @@
 #include "Runtime/UMG/Public/Components/WidgetComponent.h"
 #include "UserWidget_HPBar.h"
 #include "Runtime/AIModule/Classes/BehaviorTree/BehaviorTree.h"
+#include "Weapon/Weapon.h"
 #include "AICharacter.generated.h"
 
 
@@ -39,7 +40,12 @@ public:
 	//声明行为树
 	UPROPERTY(EditAnywhere, Category = "AI")
 		UBehaviorTree* BehaviorTree;
-	
+	//声明武器及插槽
+	UPROPERTY(EditAnywhere, Category = "Weapon")
+		TSubclassOf<AWeapon> WeaponClass;
+// 	播放攻击动画蒙太奇
+	UPROPERTY(EditAnywhere, Category = "montage")
+ 		TArray<UAnimMontage*> AISerialAttachMontage;    //这里可以使用行为树里面的PlayAnim
 		
 
 

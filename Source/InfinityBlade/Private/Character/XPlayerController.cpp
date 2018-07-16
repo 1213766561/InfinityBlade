@@ -38,7 +38,7 @@ void AXPlayerController::BeginPlay()
 		//绑定规则
 		FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, true);
 		//绑定武器
-		XWeapon->AttachToComponent(XCharacter->GetMesh(), AttachmentRules, TEXT("hand_rSocket"));
+		XWeapon->WeaponComponent->AttachToComponent(XCharacter->GetMesh(), AttachmentRules, TEXT("hand_rSocket"));
 		//绑定WeaponOwner
 		XWeapon->WeaponOwner = XCharacter;
 	}

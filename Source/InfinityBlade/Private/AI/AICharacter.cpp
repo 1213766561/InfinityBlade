@@ -10,9 +10,11 @@
 // 构造方法
 AAICharacter::AAICharacter()
 {
+
 	//初始化WidgetComponent
 	HPWidget = UObject::CreateAbstractDefaultSubobject<UWidgetComponent>(TEXT("WidgeetHP"));
 	HPWidget->SetupAttachment(GetMesh());
+
 	
 }
 

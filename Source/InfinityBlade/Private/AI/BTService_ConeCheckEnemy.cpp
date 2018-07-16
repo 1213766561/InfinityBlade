@@ -25,7 +25,7 @@ void UBTService_ConeCheckEnemy::TickNode(UBehaviorTreeComponent& OwnerComp, uint
 	AAICharacter* Monster;
 	Monster = Cast<AAICharacter>(MonsterController->GetPawn());
 	//获取朝向
-	FRotator TargetRotator = Monster->GetMeshComponent()->GetComponentRotation();
+	FRotator TargetRotator = Monster->GetArrowComponent()->GetComponentRotation();
 	//设置SelfDirection
 	MonsterBlackboard->SetValueAsVector(TEXT("SelfDirection"), TargetRotator.Vector());
 	//获取玩家的位置

@@ -4,8 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
+#include "AI/AICharacter.h"
 #include "Runtime/AIModule/Classes/BehaviorTree/BehaviorTreeComponent.h"
 #include "Runtime/AIModule/Classes/BehaviorTree/BlackboardComponent.h"
+#include "Weapon/Weapon.h"
 #include "MonsterController.generated.h"
 
 /**
@@ -23,11 +25,22 @@ public:
 	//声明黑板
 			UPROPERTY()
 				UBlackboardComponent* BlackboardComponent;
+	//声明Weapon
+			UPROPERTY()
+				AWeapon* CurrentWeapon;
+	//声明AI实例
+			UPROPERTY()
+				AAICharacter* Monster;
+
+
 
 public:
 	AMonsterController();
 	//Characteer实例的控制
 	virtual void Possess(APawn* InPawn) override;
+	//碰撞事件函数
+	UFUNCTION()
+	void CurrentWeaponBeginOverlapEvent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	
 	

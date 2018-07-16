@@ -18,14 +18,42 @@ void AMonsterController::Possess(APawn * InPawn)
 {
 	Super::Possess(InPawn);
 	//创建AI实例
-	AAICharacter* Monster = Cast<AAICharacter>(InPawn);
-
-	if (Monster->BehaviorTree)
+	 Monster = Cast<AAICharacter>(InPawn);
+	//创建Weapon
+	if (Monster->WeaponClass)
 	{
-		//初始化黑板
-		BlackboardComponent-> InitializeBlackboard(*((Monster->BehaviorTree->BlackboardAsset)));
-		//启动行为树
-		BehaviorTreeComponent->StartTree(*(Monster->BehaviorTree));
-	}
+		//生成Weapon
+		CurrentWeapon = GetWorld()->SpawnActor<AWeapon>(Monster->WeaponClass);
+		//绑定Weapon
+		FAttachmentTransformRules AttachRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget,true);
+		CurrentWeapon->WeaponComponent ->AttachToComponent(Monster->GetMesh(), AttachRules, TEXT("hand_rSocket"));
+		//武器碰撞事件回调
+		CurrentWeapon->CapsuleComponent->OnComponentBeginOverlap.AddDynamic(this, &AMonsterController::CurrentWeaponBeginOverlapEvent);
 
+		if (Monster->BehaviorTree)
+		{
+			//启动行为树
+			BehaviorTreeComponent->StartTree(*(Monster->BehaviorTree));
+			//初始化黑板
+			BlackboardComponent->InitializeBlackboard(*(Monster->BehaviorTree->BlackboardAsset));
+
+		}
+
+	}
+	
+	
+	
+}
+
+//Weapon碰撞事件函数
+void AMonsterController::CurrentWeaponBeginOverlapEvent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor)
+	{
+		if (Monster)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, FString::SanitizeFloat(Monster->BaseDamage));
+
+		}
+	}
 }
