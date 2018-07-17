@@ -30,15 +30,23 @@ void UXAnimInstance::UpdateSerialAttackDamage()
 	if (PlayerState != nullptr)
 	{
 		//加成伤害
+<<<<<<< HEAD
 		NormalAttackDamage += 10.f;
 		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, "SerialAttackDamageIs" + FString::SanitizeFloat(NormalAttackDamage));
+=======
+		PlayerState->SetAttackDamage(PlayerState->GetAttackDamage() + 10.f);
+>>>>>>> 4e395bded63bb5df97693e00099dbb11422e7fd2
 	}
 }
 
 //初始化攻击伤害
 void UXAnimInstance::InitPlayerState()
 {
+<<<<<<< HEAD
 	if (TryGetPawnOwner())
+=======
+	if (PlayerState != nullptr)
+>>>>>>> 4e395bded63bb5df97693e00099dbb11422e7fd2
 	{
 		//获取Controller
 		AXPlayerController* PlayerController = Cast<AXPlayerController>(TryGetPawnOwner()->GetController());
@@ -160,4 +168,14 @@ void UXAnimInstance::AnimNotify_SpwanIceStone(UAnimNotify * Notify)
 	}
 
 	
+}
+
+void UXAnimInstance::AnimNotify_BIsAttack(UAnimNotify * Notify)
+{
+	BIsAttack = true;
+}
+
+void UXAnimInstance::AnimNotify_BIsNotAttack(UAnimNotify * Notify)
+{
+	BIsAttack = false;
 }

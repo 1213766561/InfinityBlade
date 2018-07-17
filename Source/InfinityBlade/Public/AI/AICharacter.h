@@ -37,6 +37,7 @@ public:
 	//是否死亡
 	UPROPERTY()
 		bool bIsDead;
+<<<<<<< HEAD
 	//声明行为树
 	UPROPERTY(EditAnywhere, Category = "AI")
 		UBehaviorTree* UsBehaviorTree;
@@ -47,12 +48,16 @@ public:
 	UPROPERTY(EditAnywhere, Category = "montage")
  		TArray<UAnimMontage*> AISerialAttachMontage;    //这里可以使用行为树里面的PlayAnim
 		
-
+=======
+>>>>>>> 4e395bded63bb5df97693e00099dbb11422e7fd2
 
 	/*UPROPERTY()
 		//声明HPBar的控件
 		UUserWidget_HPBar* HP_Bar;*/
 
+	/*UPROPERTY()
+		//声明HPBar的控件
+		UUserWidget_HPBar* HP_Bar;*/
 
 public:
 	// 游戏开始调用方法
@@ -63,7 +68,16 @@ public:
 		//游戏开始函数声明
 		void UpdateHP(float Damage);
 
+public:
+	// 游戏开始调用方法
+	virtual void BeginPlay() override;		
+	//伤害函数声明
+	virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+	UFUNCTION(BlueprintImplementableEvent, Category = "States")
+		//游戏开始函数声明
+		void UpdateHP(float Damage);
 
+	
 	
 	
 	

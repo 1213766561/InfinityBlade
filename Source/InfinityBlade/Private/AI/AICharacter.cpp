@@ -14,7 +14,10 @@ AAICharacter::AAICharacter()
 	//≥ı ºªØWidgetComponent
 	HPWidget = UObject::CreateAbstractDefaultSubobject<UWidgetComponent>(TEXT("WidgeetHP"));
 	HPWidget->SetupAttachment(GetMesh());
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4e395bded63bb5df97693e00099dbb11422e7fd2
 	
 }
 

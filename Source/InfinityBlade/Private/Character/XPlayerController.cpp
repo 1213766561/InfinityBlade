@@ -38,7 +38,11 @@ void AXPlayerController::BeginPlay()
 		//绑定规则
 		FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, true);
 		//绑定武器
+<<<<<<< HEAD
 		XWeapon->WeaponComponent->AttachToComponent(XCharacter->GetMesh(), AttachmentRules, TEXT("hand_rSocket"));
+=======
+		XWeapon->AttachToComponent(XCharacter->GetMesh(), AttachmentRules, TEXT("hand_rSocket"));
+>>>>>>> 4e395bded63bb5df97693e00099dbb11422e7fd2
 		//绑定WeaponOwner
 		XWeapon->WeaponOwner = XCharacter;
 	}
@@ -105,6 +109,7 @@ void AXPlayerController::UpdateUI()
 
 void AXPlayerController::WeaponOverlapEvent(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
+<<<<<<< HEAD
 	AAICharacter* TargetAI = Cast<AAICharacter>(OtherActor);
 	if (TargetAI)
 	{
@@ -115,6 +120,15 @@ void AXPlayerController::WeaponOverlapEvent(UPrimitiveComponent * OverlappedComp
 		}
 
 
+=======
+	if (XWeapon->WeaponOwner)
+	{
+		if (XAnimInstance->BIsAttack)
+		{
+			UGameplayStatics::ApplyDamage(OtherActor, XPlayerState->GetAttackDamage(), this, XCharacter, nullptr);
+			GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, "Overlap");
+		}
+>>>>>>> 4e395bded63bb5df97693e00099dbb11422e7fd2
 		/*DmagedCharacter = Cast<ACharacter>(SweepResult->Break->GetHit);
 		if (DmagedCharacter != nullptr && DmagedCharacter != WeaponOwner)
 		{
@@ -140,9 +154,15 @@ void AXPlayerController::SetupInputComponent()
 //前后移动
 void AXPlayerController::MoveeForward(float Speed)
 {
+<<<<<<< HEAD
 	FRotator ControllerRotation = XCharacter->GetActorRotation();						//GetControlRotation(); // this->GetActorRotation();
 	FRotator ControllerYawRotation (0.f, ControllerRotation.Yaw,0.f);
 	//FRotator ControllerYawRotation(0.f,0.f, ControllerRotation.Yaw);
+=======
+	FRotator ControllerRotation = GetControlRotation();
+	//FRotator ControllerYawRotation (0.f, ControllerRotation.Yaw,0.f);
+	FRotator ControllerYawRotation(0.f,0.f, ControllerRotation.Yaw);
+>>>>>>> 4e395bded63bb5df97693e00099dbb11422e7fd2
 	FVector Direction = FRotationMatrix(ControllerYawRotation).GetUnitAxis(EAxis::X);
 	//FVector Direction = ControllerYawRotation->GetForwardVector()
 	//获取移动方法
@@ -156,9 +176,15 @@ void AXPlayerController::MoveeForward(float Speed)
 //左右移动
 void AXPlayerController::MoveRight(float Speed)
 {
+<<<<<<< HEAD
 	FRotator ControllerRotation = XCharacter->GetActorRotation();
 	FRotator ControllerYawRotation(0.f, ControllerRotation.Yaw, 0.f);
 	//FRotator ControllerYawRotation(0.f, 0.f, ControllerRotation.Yaw);
+=======
+	FRotator ControllerRotation = GetControlRotation();
+	//FRotator ControllerYawRotation(0.f, ControllerRotation.Yaw, 0.f);
+	FRotator ControllerYawRotation(0.f, 0.f, ControllerRotation.Yaw);
+>>>>>>> 4e395bded63bb5df97693e00099dbb11422e7fd2
 	FVector Direction = FRotationMatrix(ControllerYawRotation).GetUnitAxis(EAxis::Y);
 	//获取移动方法
 	if (XCharacter)
@@ -233,6 +259,62 @@ void AXPlayerController::LockEnemy(float HitRadius)
 	}
 }
 
+void AXPlayerController::Trun(float Speed)
+{
+	XCharacter->AddControllerYawInput(Speed);
+}
+
+void AXPlayerController::Lookup(float Speed)
+{
+	XCharacter->AddControllerPitchInput(Speed);
+}
+
+
+//锁定敌人
+void AXPlayerController::LockEnemy()
+{
+	//获得自己的位置
+	FVector USLocation = XCharacter->GetActorLocation();
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAICharacter::StaticClass(), AIArray);
+	int AINum = AIArray.Num();
+	if (AINum>0)
+	{
+		AActor* MinActor = AIArray[0];
+		float MinDistance = FVector::Dist(USLocation, AIArray[0]->GetActorLocation());
+		
+		for (int i = 1; i < AINum; i++)
+		{
+			if (Cast<AAICharacter>(AIArray[i])->bIsDead)
+			{
+				//跳出此次循环，进行下一次循环
+				continue;
+			}
+			//获得距离
+			float TmpDistance = FVector::Dist(USLocation, AIArray[i]->GetActorLocation());
+			if (MinDistance > TmpDistance)
+			{
+				MinDistance = TmpDistance;
+				MinActor = AIArray[i];
+			}
+
+		}
+		//判断最小距离大小
+		if (MinDistance<=400.f)
+		{
+			//计算朝向，朝向最近的敌人
+			FRotator TargetRotation = UKismetMathLibrary::FindLookAtRotation(USLocation, MinActor->GetActorLocation());
+			//修改朝向
+			TargetRotation.Roll = XCharacter->GetCapsuleComponent()->GetComponentRotation().Roll;
+			TargetRotation.Pitch = XCharacter->GetCapsuleComponent()->GetComponentRotation().Pitch;
+			//设置朝向
+			XCharacter->GetCapsuleComponent()->SetWorldRotation(TargetRotation);
+
+		}
+
+
+	}
+}
+
 
 
 //控件按钮初始化方法
@@ -265,7 +347,11 @@ void AXPlayerController::AttackBtnOnClickedEvent()
 
 	//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, "False");
 
+<<<<<<< HEAD
 	LockEnemy(400.f);
+=======
+	LockEnemy();
+>>>>>>> 4e395bded63bb5df97693e00099dbb11422e7fd2
 
 	//获得连击动画
 	UAnimMontage* SerialAttachMontage = XCharacter->SerialAttachMontage;

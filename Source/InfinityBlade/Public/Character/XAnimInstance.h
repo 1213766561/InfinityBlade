@@ -102,8 +102,12 @@ public:
 	//结束伤害通知
 	UFUNCTION()
 		void AnimNotify_BIsNotAttack(UAnimNotify* Notify);
+<<<<<<< HEAD
 	//寒冰之石蒙太奇开始播放
 	UFUNCTION()
 		void AnimNotify_SpwanIceStone(UAnimNotify* Notify);
+=======
+
+>>>>>>> 4e395bded63bb5df97693e00099dbb11422e7fd2
 
 };

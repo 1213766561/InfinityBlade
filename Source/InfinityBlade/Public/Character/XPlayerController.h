@@ -35,6 +35,11 @@ public:
 	//声明PlayerState
 	UPROPERTY()
 		AXPlayerState* XPlayerState;
+	UPROPERTY()
+		ACharacter* DmagedCharacter;
+	//AI数组
+	UPROPERTY()
+		TArray<AActor*>AIArray;    //指针需要加在类型里面；
 	
 	//AI数组
 	UPROPERTY()
@@ -64,7 +69,11 @@ public:
 
 	//锁定AI
 	UFUNCTION()
+<<<<<<< HEAD
 		void LockEnemy(float HitRadius);
+=======
+		void LockEnemy();
+>>>>>>> 4e395bded63bb5df97693e00099dbb11422e7fd2
 
 	//攻击按钮点击事件
 	UFUNCTION()
