@@ -39,7 +39,7 @@ public:
 		bool bIsDead;
 	//声明行为树
 	UPROPERTY(EditAnywhere, Category = "AI")
-		UBehaviorTree* BehaviorTree;
+		UBehaviorTree* UsBehaviorTree;
 	//声明武器及插槽
 	UPROPERTY(EditAnywhere, Category = "Weapon")
 		TSubclassOf<AWeapon> WeaponClass;

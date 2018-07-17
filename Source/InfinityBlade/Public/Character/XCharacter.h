@@ -56,7 +56,8 @@ public:
 public:
 	//游戏开始调用
 	virtual void BeginPlay() override;
-
+	//定义伤害函数
+	virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
 
 	

@@ -33,20 +33,13 @@ ASkill_IceStone::ASkill_IceStone()
 	
 }
 
-
-
-
-
-
-
-
-
+//碰撞事件函数
 void ASkill_IceStone::HasOverLap(UPrimitiveComponent * OvrlappedComponent, AActor * OtherActor, UPrimitiveComponent * OtherComponent, int OtherBodyIndex, bool FromSweep, const FHitResult & HitResult)
 {
-	
-	if (OtherActor)
+	AAICharacter* TargetMonster = Cast<AAICharacter>(OtherActor);
+	if (TargetMonster)
 	{
-		UGameplayStatics::ApplyPointDamage(OtherActor, 20.f, HitResult.ImpactNormal, HitResult, nullptr, this, nullptr);
+		UGameplayStatics::ApplyPointDamage(TargetMonster, 20.f, HitResult.ImpactNormal, HitResult, nullptr, this, nullptr);
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), Particle, OtherActor->GetActorLocation());
 		this->Destroyed();  //Destroyed 失效，在蓝图中重载
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, "HasOverLap");

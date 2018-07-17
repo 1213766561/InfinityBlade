@@ -25,13 +25,16 @@ void UBTService_ConeCheckEnemy::TickNode(UBehaviorTreeComponent& OwnerComp, uint
 	AAICharacter* Monster;
 	Monster = Cast<AAICharacter>(MonsterController->GetPawn());
 	//获取朝向
-	FRotator TargetRotator = Monster->GetArrowComponent()->GetComponentRotation();
+	FRotator TargetRotator = Monster->GetMesh()->GetComponentRotation();			//build GetArrowComponent 出错
 	//设置SelfDirection
 	MonsterBlackboard->SetValueAsVector(TEXT("SelfDirection"), TargetRotator.Vector());
 	//获取玩家的位置
 	FVector TargetPlayerLocation = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)->GetActorLocation();
 	//设置TargetLocation
 	MonsterBlackboard->SetValueAsVector(TEXT("TargetLocation"), TargetPlayerLocation);
+	//计算Distance
+	float Distance = FVector::Distance(MonsterController->GetPawn()->GetActorLocation(), TargetPlayerLocation);
 
+	MonsterBlackboard->SetValueAsFloat(TEXT("Distance"), Distance);
 
 }

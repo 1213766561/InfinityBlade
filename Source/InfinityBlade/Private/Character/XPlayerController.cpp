@@ -105,14 +105,15 @@ void AXPlayerController::UpdateUI()
 
 void AXPlayerController::WeaponOverlapEvent(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	if (XWeapon->WeaponOwner)
+	AAICharacter* TargetAI = Cast<AAICharacter>(OtherActor);
+	if (TargetAI)
 	{
-		if (XAnimInstance->BIsAttack)
+		if (XAnimInstance->BIsAttack == true)
 		{
-			UGameplayStatics::ApplyDamage(OtherActor, XAnimInstance->NormalAttackDamage, this, XCharacter, nullptr);
+			UGameplayStatics::ApplyDamage(TargetAI, XAnimInstance->NormalAttackDamage, this, XCharacter, nullptr);
+			GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Blue, FString::SanitizeFloat(XPlayerState->GetAttackDamage()));
 		}
 
-		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Blue, FString::SanitizeFloat(XPlayerState->GetAttackDamage()));
 
 		/*DmagedCharacter = Cast<ACharacter>(SweepResult->Break->GetHit);
 		if (DmagedCharacter != nullptr && DmagedCharacter != WeaponOwner)
@@ -139,7 +140,7 @@ void AXPlayerController::SetupInputComponent()
 //前后移动
 void AXPlayerController::MoveeForward(float Speed)
 {
-	FRotator ControllerRotation = GetControlRotation(); // this->GetActorRotation();
+	FRotator ControllerRotation = XCharacter->GetActorRotation();						//GetControlRotation(); // this->GetActorRotation();
 	FRotator ControllerYawRotation (0.f, ControllerRotation.Yaw,0.f);
 	//FRotator ControllerYawRotation(0.f,0.f, ControllerRotation.Yaw);
 	FVector Direction = FRotationMatrix(ControllerYawRotation).GetUnitAxis(EAxis::X);
@@ -155,7 +156,7 @@ void AXPlayerController::MoveeForward(float Speed)
 //左右移动
 void AXPlayerController::MoveRight(float Speed)
 {
-	FRotator ControllerRotation = GetControlRotation();
+	FRotator ControllerRotation = XCharacter->GetActorRotation();
 	FRotator ControllerYawRotation(0.f, ControllerRotation.Yaw, 0.f);
 	//FRotator ControllerYawRotation(0.f, 0.f, ControllerRotation.Yaw);
 	FVector Direction = FRotationMatrix(ControllerYawRotation).GetUnitAxis(EAxis::Y);

@@ -17,10 +17,10 @@ class INFINITYBLADE_API UBTTask_MovetToTargetLocation : public UBTTaskNode
 
 
 public:
+	//最大感应距离
 	UPROPERTY(EditAnywhere, Category = "Direction")
 		float Dir;
 
-	
 public:
 	//重写Task方法
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;

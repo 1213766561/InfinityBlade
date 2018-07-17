@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "AIController.h"
 #include "AI/AICharacter.h"
+#include "AI/AIAnimInstance.h"
 #include "Runtime/AIModule/Classes/BehaviorTree/BehaviorTreeComponent.h"
 #include "Runtime/AIModule/Classes/BehaviorTree/BlackboardComponent.h"
 #include "Weapon/Weapon.h"
@@ -31,7 +32,9 @@ public:
 	//声明AI实例
 			UPROPERTY()
 				AAICharacter* Monster;
-
+	//声明Aim实例
+			UPROPERTY()
+				UAIAnimInstance* MonsterAim;
 
 
 public:

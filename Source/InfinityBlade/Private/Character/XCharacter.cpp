@@ -2,6 +2,7 @@
 
 #include "XCharacter.h"
 #include "Runtime/Engine/Classes/Components/SceneComponent.h"
+#include "Character/XPlayerController.h"
 #include "Runtime/Engine/Classes/GameFramework/CharacterMovementComponent.h"
 
 //构造方法，相当于ConstructEvent
@@ -31,5 +32,17 @@ void AXCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+float AXCharacter::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	AXPlayerController* PlayController = Cast<AXPlayerController>(this->GetController());
+
+
+		PlayController->UpdatePlayerState(Damage, 0.f);
+		PlayController->UpdateUI();
+		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black,"DamageSuccess");
+	
+	return Damage;
 }
 

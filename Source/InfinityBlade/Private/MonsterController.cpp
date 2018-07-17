@@ -1,7 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "MonsterController.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "AI/AICharacter.h"
+#include "Character/XCharacter.h"
 
 AMonsterController::AMonsterController()
 {
@@ -27,33 +29,51 @@ void AMonsterController::Possess(APawn * InPawn)
 		//绑定Weapon
 		FAttachmentTransformRules AttachRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget,true);
 		CurrentWeapon->WeaponComponent ->AttachToComponent(Monster->GetMesh(), AttachRules, TEXT("hand_rSocket"));
+		CurrentWeapon->WeaponOwner = Monster;
+		//初始化Aim
+		MonsterAim = Cast<UAIAnimInstance>(Monster->GetMesh()->GetAnimInstance());
 		//武器碰撞事件回调
 		CurrentWeapon->CapsuleComponent->OnComponentBeginOverlap.AddDynamic(this, &AMonsterController::CurrentWeaponBeginOverlapEvent);
 
-		if (Monster->BehaviorTree)
-		{
-			//启动行为树
-			BehaviorTreeComponent->StartTree(*(Monster->BehaviorTree));
-			//初始化黑板
-			BlackboardComponent->InitializeBlackboard(*(Monster->BehaviorTree->BlackboardAsset));
-
-		}
-
 	}
 	
-	
+// 	if (Monster->UsBehaviorTree)
+// 	{
+// 		//启动行为树
+// 		BehaviorTreeComponent->StartTree(*(Monster->UsBehaviorTree));
+// 		//初始化黑板
+// 		BlackboardComponent->InitializeBlackboard(*(Monster->UsBehaviorTree->BlackboardAsset));
+// 
+// 	}
 	
 }
 
 //Weapon碰撞事件函数
 void AMonsterController::CurrentWeaponBeginOverlapEvent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (OtherActor)
+	AXCharacter* TargetCharacter = Cast<AXCharacter>(OtherActor);
+	if (TargetCharacter)
 	{
-		if (Monster)
+		if (MonsterAim->bIsAttack == true)
 		{
+			UGameplayStatics::ApplyDamage(TargetCharacter, Monster->BaseDamage, this, Monster, nullptr);
 			GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Black, FString::SanitizeFloat(Monster->BaseDamage));
-
 		}
 	}
+
+	
+// 	if (MonsterAim->bIsAttack == true)
+// 		{
+// 			
+// 		}
+
+	
+
+		/*DmagedCharacter = Cast<ACharacter>(SweepResult->Break->GetHit);
+		if (DmagedCharacter != nullptr && DmagedCharacter != WeaponOwner)
+		{
+		DmagedCharacter->TakeDamage(XPlayerState->GetAttackDamage(), FDamageEvent::)
+		}*/
+
+	
 }

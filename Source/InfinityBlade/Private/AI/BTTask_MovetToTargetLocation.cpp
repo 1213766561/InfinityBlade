@@ -14,23 +14,27 @@ EBTNodeResult::Type UBTTask_MovetToTargetLocation::ExecuteTask(UBehaviorTreeComp
 {
 	Super::ExecuteTask(OwnerComp, NodeMemory);
 	//获取Conttroller
-	AMonsterController* MonsterController = Cast<AMonsterController>(OwnerComp.GetAIOwner());
-	//获取Monster
-	AAICharacter* Monster = Cast<AAICharacter>(MonsterController->GetPawn());
-	//获取动画实例
-	UAIAnimInstance* MonsterAnim = Cast<UAIAnimInstance>(Monster->GetMesh()->GetAnimInstance());
-	//获取黑板
-	UBlackboardComponent* MonsterBlackboard = MonsterController->BlackboardComponent;
-	//获得TargetLocation
-	FVector TargetLocation = MonsterBlackboard->GetValueAsVector(TEXT("TargetLocation"));
-	//计算距离
-	float Distance = FVector::Distance(MonsterController->GetPawn()->GetActorLocation(), TargetLocation);
-	//判断距离
-	if (Distance<= Dir)  
+		AMonsterController* MonsterController = Cast<AMonsterController>(OwnerComp.GetAIOwner());
+// 		//获取Monster
+// 		AAICharacter* Monster = Cast<AAICharacter>(MonsterController->GetPawn());
+// 		//获取动画实例
+// 		UAIAnimInstance* MonsterAnim = Cast<UAIAnimInstance>(Monster->GetMesh()->GetAnimInstance());
+// 		//获取黑板
+		UBlackboardComponent* MonsterBlackboard = MonsterController->BlackboardComponent;
+// 		//获得TargetLocation
+// 		FVector TargetLocation = MonsterBlackboard->GetValueAsVector(TEXT("TargetLocation"));
+// 		//计算距离
+// 		float Distance = FVector::Distance(MonsterController->GetPawn()->GetActorLocation(), TargetLocation);
+// 		//判断距离
+	if (MonsterController)
 	{
-		MonsterController->MoveToLocation(TargetLocation, 20.f, true, true, true);
-		return EBTNodeResult::Succeeded;
-	}
+		if (MonsterBlackboard->GetValueAsFloat(TEXT("Distance")) <= Dir)
+		{
+			MonsterController->MoveToLocation(MonsterBlackboard->GetValueAsVector(TEXT("TargetLocation")), 20.f, true, true, true);
+			return EBTNodeResult::Succeeded;
+		}
 
+		return EBTNodeResult::Failed;
+	}
 	return EBTNodeResult::Failed;
 }
