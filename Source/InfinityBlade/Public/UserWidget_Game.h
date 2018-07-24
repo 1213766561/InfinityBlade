@@ -9,7 +9,7 @@
 #include "UserWidget_Game.generated.h"
 
 /**
- * Ö÷½çÃæUI
+ * Ã–Ã·Â½Ã§ÃƒÃ¦UI
  */
 UCLASS()
 class INFINITYBLADE_API UUserWidget_Game : public UUserWidget
@@ -17,18 +17,20 @@ class INFINITYBLADE_API UUserWidget_Game : public UUserWidget
 	GENERATED_BODY()
 	
 public:
-	//ÉùÃ÷ÆÕÍ¨¹¥»÷Button
+	//Ã‰Ã¹ÃƒÃ·Ã†Ã•ÃÂ¨Â¹Â¥Â»Ã·Button
 	UPROPERTY(Meta = (BindWidget))
 		UButton* Button_Attack;
-	//ÉùÃ÷HP
+	//Ã‰Ã¹ÃƒÃ·HP
 	UPROPERTY(Meta = (BindWidget))
 		UProgressBar* ProgressBar_HP;
-	//ÉùÃ÷MP
+	//Ã‰Ã¹ÃƒÃ·MP
 	UPROPERTY(Meta = (BindWidget))
 		UProgressBar* ProgressBar_MP;
-	//ÉùÃ÷º®±ùÖ®Ê¯button
+	//Ã‰Ã¹ÃƒÃ·ÂºÂ®Â±Ã¹Ã–Â®ÃŠÂ¯button
 	UPROPERTY(Meta = (BindWidget))
 		UButton* Button_IceStone;
+	UPROPERTY(Meta = (BindWidget))
+		UButton* Button_RecoverLightSkill;
 	
 	
 };
