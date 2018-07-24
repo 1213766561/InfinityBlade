@@ -11,7 +11,7 @@
 #include "XCharacter.generated.h"
 
 
-/* Ó¢ĞÛ½ÇÉ«Àà*/
+/* è‹±é›„è§’è‰²ç±»*/
 
 UCLASS()
 class INFINITYBLADE_API AXCharacter : public ACharacter
@@ -21,43 +21,45 @@ class INFINITYBLADE_API AXCharacter : public ACharacter
 public:
 
 	
-	/* Camera×é¼ş´´½¨*/
+	/* Cameraç»„ä»¶åˆ›å»º*/
 	UPROPERTY(EditAnywhere)
 		UCameraComponent* CurrentCameraComponent;
-	//ÉùÃ÷ÎäÆ÷
+	//å£°æ˜æ­¦å™¨
 	UPROPERTY(EditAnywhere, Category = "weapon")
 		TSubclassOf<AWeapon> XWeapon;
-	//²¥·Å¶¯»­ÃÉÌ«Ææ
+	//æ’­æ”¾åŠ¨ç”»è’™å¤ªå¥‡
 	UPROPERTY(EditAnywhere, Category = "montage")
 		UAnimMontage* SerialAttachMontage;
-	//º®±ùÖ®Ê¯ÃÉÌ«Ææ
+	//å¯’å†°ä¹‹çŸ³è’™å¤ªå¥‡
 	UPROPERTY(EditAnywhere, Category = "montage")
 		UAnimMontage* IceStoneSkillMontage;
-	//º®±ùÖ®Ê¯ÌØĞ§Class
+	//å¯’å†°ä¹‹çŸ³ç‰¹æ•ˆClass
 	UPROPERTY(EditAnywhere, Category = "SkillParticle")
 		TSubclassOf<ASkill_IceStone> IceStoneSkillParticle;
+	UPROPERTY(EditAhywhere, Category = "The light of recovery")
+		UAnimMontage* RecoverLightSkillMontage;
 
-	//Ö¸¶¨Ä¬ÈÏÑªÁ¿
+	//æŒ‡å®šé»˜è®¤è¡€é‡
 	UPROPERTY(EditAnywhere, Category = "PlayerState")
 		float TotalHP;
-	//Ö¸¶¨Ä¬ÈÏMP
+	//æŒ‡å®šé»˜è®¤MP
 	UPROPERTY(EditAnywhere, Category = "PlayerState")
 		float TotalMP;
-	//Ö¸¶¨Ä¬ÈÏÉËº¦
+	//æŒ‡å®šé»˜è®¤ä¼¤å®³
 	UPROPERTY(EditAnywhere, Category = "PlayerState")
 		float AttackDamage;
 
 
 
 public:
-	//¹¹Ôì·½·¨
+	//æ„é€ æ–¹æ³•
 	AXCharacter();
 
 public:
-	//ÓÎÏ·¿ªÊ¼µ÷ÓÃ
+	//æ¸¸æˆå¼€å§‹è°ƒç”¨
 	virtual void BeginPlay() override;
 <<<<<<< HEAD
-	//¶¨ÒåÉËº¦º¯Êı
+	//å®šä¹‰ä¼¤å®³å‡½æ•°
 	virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 =======
 
